@@ -1,0 +1,54 @@
+{
+  "Aggregates": [
+    {
+      "UpstreamPathTemplate": "/api/usersPosts",
+      "RouteKeys": [ "users", "posts" ],
+      "Aggregator": "UsersPostsAggregator"
+    }
+  ],
+  "Routes": [
+    {
+      "UpstreamPathTemplate": "/api/users",
+      "UpstreamHttpMethod": [],
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "jsonplaceholder.typicode.com",
+          "Port": 443
+        }
+      ],
+      "DownstreamPathTemplate": "/users",
+      "Key": "users",
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer"
+      },
+      "RouteClaimsRequirement": {
+        "userType": "admin"
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/api/posts",
+      "UpstreamHttpMethod": [],
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "jsonplaceholder.typicode.com",
+          "Port": 443
+        }
+      ],
+      "DownstreamPathTemplate": "/posts",
+      "Key": "posts",
+      "RateLimitOptions": {
+        "ClientWhitelist": [],
+        "EnableRateLimiting": true,
+        "Period": "3s",
+        "PeriodTimespan": 5,
+        "Limit": 3
+      },
+      "DelegatingHandlers": [
+        "BlackListHandler"
+      ] 
+    }
+  ],
+  "GlobalConfiguration": {
+    "BaseUrl": "https://localhost:44372"
+  }
+}
