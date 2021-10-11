@@ -18,12 +18,12 @@
       ],
       "DownstreamPathTemplate": "/users",
       "Key": "users",
-      //"AuthenticationOptions": {
-      //  "AuthenticationProviderKey": "Bearer"
-      //},
-      //"RouteClaimsRequirement": {
-      //  "userType": "admin"
-      //}
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer"
+      },
+      "RouteClaimsRequirement": {
+        "userType": "admin"
+      }
     },
     {
       "UpstreamPathTemplate": "/api/posts",
