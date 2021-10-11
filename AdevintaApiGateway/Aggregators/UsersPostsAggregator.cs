@@ -17,6 +17,11 @@ namespace AdevintaApiGateway.Aggregators
     {
         public async Task<DownstreamResponse> Aggregate(List<HttpContext> responses)
         {
+            if (responses.Any(r => r.Items.Errors().Count > 0))
+            {
+                return new DownstreamResponse(null, HttpStatusCode.BadRequest, (List<Header>) null, null);
+            }
+        
             var userResponseContent = await responses[0].Items.DownstreamResponse().Content.ReadAsStringAsync();
             var postResponseContent = await responses[1].Items.DownstreamResponse().Content.ReadAsStringAsync();
 
